@@ -198,15 +198,6 @@ class Element(Base):
                 num_matches += 1
                 item = self.parse(xmlelement, schema, allow_none=True, context=context)
                 result.append(item)
-            else:
-                # If the element passed doesn't match and the current one is
-                # not optional then throw an error
-                if num_matches == 0 and not self.is_optional:
-                    raise UnexpectedElementError(
-                        "Unexpected element %r, expected %r"
-                        % (element_tag.text, self.qname.text)
-                    )
-                break
 
         if not self.accepts_multiple:
             result = result[0] if result else None
