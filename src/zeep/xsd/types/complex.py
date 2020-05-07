@@ -200,7 +200,10 @@ class ComplexType(AnyType):
 
             # Check if all children are consumed (parsed)
             if elements:
-                init_kwargs["_raw_elements"] = elements
+                if schema.settings.strict:
+                    raise XMLParseError("Unexpected element %r" % elements[0].tag)
+                else:
+                    init_kwargs["_raw_elements"] = elements
 
         # Parse attributes
         if attributes:
